@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, field_validator, ValidationError
 
 from typing_extensions import Literal
+import socket
 
 from .model_validation_exception import ModelErrorException
 
@@ -44,13 +45,18 @@ create_model_router = APIRouter()
 async def create_item(request: Request):
     """Create a new LEGO model item."""
     host_name = request.headers.get("host", "unknown")
+    ip_address = "unknown"
+    try:
+        ip_address = socket.gethostbyname(socket.gethostname())
+    except Exception:
+        ip_address = "unknown"
 
     try:
         body = await request.json()
         lego_validated = LegoModel(**body)
         return JSONResponse(
             content={
-                "host": host_name,
+                "host": f"{host_name} - {ip_address}",
                 "success": True,
                 "message": "Item created successfully",
                 "data": lego_validated.model_dump()
