@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg
+*.eggs
+*.env
+.env*
+*.venv
+venv/
+build/
+dist/
+*.egg-info/
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# VS Code
+.vscode/
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# Pipenv
+Pipfile.lock
+
+# pytest
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docs
+*.http
+
+# Misc
+*.sqlite3
+*.db
+
+# Ignore test results
+htmlcov/
+coverage.xml
+*.cover
+*.coverage
+
+# Ignore secrets
+secrets.env
+
+# Ignore backups
+*.bak
+*.swp
+*.swo
+
+# Ignore node_modules (if any)
+node_modules/

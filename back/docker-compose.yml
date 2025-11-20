@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    container_name: load_balancer_app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      # This tells Python to run in "unbuffered" mode,
+      # meaning output to stdout and stderr is written
+      # immediately, not cached. This is useful in Docker
+      # containers so logs appear in real time,
+      # making debugging and monitoring easier.
+      - PYTHONUNBUFFERED=1
