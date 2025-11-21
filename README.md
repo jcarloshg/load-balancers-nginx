@@ -17,6 +17,7 @@ A production-ready load balancing system using Nginx to distribute traffic acros
 ## 🎯 Overview
 
 This project implements a load-balanced API system with:
+
 - **Nginx** as the load balancer (port 8080)
 - **3 FastAPI backend services** (back-01, back-02, back-03) running on ports 8001, 8002, 8003
 - **Weighted load distribution** to optimize resource usage
@@ -60,16 +61,17 @@ upstream backend {
 
 ### Key Configuration Parameters
 
-| Parameter | Value | Description |
-|-----------|-------|-------------|
-| `worker_processes` | `auto` | Automatically set based on CPU cores |
-| `worker_connections` | `1024` | Max simultaneous connections per worker |
-| `listen` | `80` | Internal port (mapped to 8080 externally) |
-| `proxy_pass` | `http://backend` | Forwards requests to backend upstream |
+| Parameter            | Value            | Description                               |
+| -------------------- | ---------------- | ----------------------------------------- |
+| `worker_processes`   | `auto`           | Automatically set based on CPU cores      |
+| `worker_connections` | `1024`           | Max simultaneous connections per worker   |
+| `listen`             | `80`             | Internal port (mapped to 8080 externally) |
+| `proxy_pass`         | `http://backend` | Forwards requests to backend upstream     |
 
 ### Load Distribution Logic
 
 With weights 1:2:3:
+
 - **back-01**: ~16.7% of traffic (1/6)
 - **back-02**: ~33.3% of traffic (2/6)
 - **back-03**: ~50.0% of traffic (3/6)
@@ -85,18 +87,20 @@ This allows back-03 to handle more load due to higher resource allocation.
 
 ### Service Specifications
 
-| Service | Container | Port | CPU Limit | Memory Limit | Weight | HOST_TAG |
-|---------|-----------|------|-----------|--------------|--------|----------|
-| back-01 | back-01 | 8001 | 0.125 cores | 64M | 1 | back-01 |
-| back-02 | back-02 | 8002 | 0.250 cores | 128M | 2 | back-02 |
-| back-03 | back-03 | 8003 | 0.250 cores | 256M | 3 | back-03 |
+| Service | Container | Port | CPU Limit   | Memory Limit | Weight | HOST_TAG |
+| ------- | --------- | ---- | ----------- | ------------ | ------ | -------- |
+| back-01 | back-01   | 8001 | 0.125 cores | 64M          | 1      | back-01  |
+| back-02 | back-02   | 8002 | 0.250 cores | 128M         | 2      | back-02  |
+| back-03 | back-03   | 8003 | 0.250 cores | 256M         | 3      | back-03  |
 
 ### API Endpoints
 
 #### POST `/models`
+
 Creates a LEGO model with validation.
 
 **Request Body:**
+
 ```json
 {
   "name": "Starship Enterprise",
@@ -109,6 +113,7 @@ Creates a LEGO model with validation.
 ```
 
 **Response:**
+
 ```json
 {
   "host": "tag: back-01 - 172.18.0.2",
@@ -121,6 +126,7 @@ Creates a LEGO model with validation.
 ### Environment Variables
 
 Each backend service has:
+
 - `PYTHONUNBUFFERED=1`: Ensures real-time log output
 - `HOST_TAG`: Unique identifier for tracking request distribution
 
@@ -180,16 +186,19 @@ docker-compose stop back-01
 ### Starting the System
 
 1. **Start all services:**
+
    ```bash
    docker-compose up -d
    ```
 
 2. **Verify services are running:**
+
    ```bash
    docker-compose ps
    ```
 
 3. **Check nginx health:**
+
    ```bash
    curl http://localhost:8080/nginx-health
    ```
@@ -341,7 +350,7 @@ Current host distribution:
     - tag: back-02 - 172.18.0.3: 6666
     - tag: back-03 - 172.18.0.4: 10000
 
-Load Balancer Host Distribution 
+Load Balancer Host Distribution
     - total request sent 20000
     - total request completed 20000
 ```
@@ -349,37 +358,47 @@ Load Balancer Host Distribution
 ### Stress Testing Scenarios
 
 #### 1. Baseline Performance Test
+
 ```python
 total_requests = 1000
 concurrency = 100
 ```
+
 Tests normal load with moderate concurrency.
 
 #### 2. High Concurrency Test
+
 ```python
 total_requests = 10000
 concurrency = 5000
 ```
+
 Tests system under high concurrent load.
 
 #### 3. Sustained Load Test
+
 ```python
 total_requests = 50000
 concurrency = 1000
 ```
+
 Tests system stability over extended periods.
 
 #### 4. Spike Test
+
 ```python
 total_requests = 20000
 concurrency = 10000
 ```
+
 Tests system response to sudden traffic spikes.
 
 ### Analyzing Results
 
 #### Distribution Verification
+
 The distribution should approximate the weight ratio (1:2:3):
+
 - back-01: ~16-17% of requests
 - back-02: ~33-34% of requests
 - back-03: ~49-50% of requests
@@ -521,6 +540,7 @@ docker-compose exec back-01 hostname -i
 ### Common Issues
 
 #### Services won't start
+
 ```bash
 # Check logs
 docker-compose logs
@@ -533,6 +553,7 @@ docker-compose down && docker-compose up -d --build
 ```
 
 #### Load balancer not distributing correctly
+
 ```bash
 # Verify nginx config
 docker-compose exec nginx nginx -t
@@ -545,6 +566,7 @@ docker-compose exec nginx ping back-01
 ```
 
 #### High memory usage
+
 ```bash
 # Check current usage
 docker stats
@@ -553,13 +575,6 @@ docker stats
 # Restart services
 docker-compose down && docker-compose up -d
 ```
-
-## 📚 Additional Resources
-
-- [Nginx Documentation](https://nginx.org/en/docs/)
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [Docker Compose Documentation](https://docs.docker.com/compose/)
-- [Load Balancing Algorithms](https://nginx.org/en/docs/http/load_balancing.html)
 
 ## 📄 License
 
