@@ -5,6 +5,7 @@ A production-ready load balancing system using Nginx to distribute traffic acros
 ## 📋 Table of Contents
 
 - [Overview](#overview)
+- [Technologies](#technologies)
 - [Architecture](#architecture)
 - [Load Balancer Configuration](#load-balancer-configuration)
 - [Backend Services](#backend-services)
@@ -24,6 +25,29 @@ This project implements a load-balanced API system with:
 - **Health checks** for automatic failure detection
 - **Resource limits** for controlled resource allocation
 - **Stress testing tools** for performance validation
+
+## 🚀 Technologies
+
+### Core Technologies
+
+- 🐳 **Docker** - Containerization and orchestration
+- 🔀 **Nginx** - Load balancer and reverse proxy
+- 🟩 **FastAPI** - High-performance Python web framework
+- 🟦 **Python 3.12** - Backend programming language
+- 🛡️ **Pydantic** - Data validation and settings management
+
+### Development & Testing
+
+- 🧪 **Pytest** - Unit and integration testing framework
+- 📊 **Requests** - HTTP stress testing library
+- 🖥️ **Bash/Zsh** - Shell scripting and automation
+
+### Architecture & Patterns
+
+- 🏗️ **Domain Driven Design** - Business logic organization
+- ⚖️ **Load Balancing** - Weighted round-robin distribution
+- 🏥 **Health Checks** - Automatic failure detection
+- 🔒 **Resource Limits** - CPU and memory constraints
 
 ## 🏗️ Architecture
 
