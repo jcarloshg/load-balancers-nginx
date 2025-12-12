@@ -2,6 +2,9 @@
 
 A production-ready load balancing system using Nginx to distribute traffic across multiple FastAPI backend services. This project demonstrates weighted load balancing, health checks, resource limits, and stress testing capabilities.
 
+- ⚖️ Load Balancing, 🏥 Health Checks, 🔒 Resource Limits, 🏗️ Domain Driven Design, 🧪 Unit Testing, 🏗️ Clean Architecture, 🔄 Stress Testing
+- 🐳 Docker, 🔀 Nginx, 🟩 FastAPI, 🟦 Python, 🛡️ Pydantic, 🧪 Pytest, 📊 Requests, 🖥️ Bash/Zsh, 📦 Docker Compose
+
 ## 📋 Table of Contents
 
 - [Overview](#overview)
